@@ -47,6 +47,48 @@ async function createWine(data) {
     });
 }
 
+async function updateWine(id, data) {
+  const sql = `
+    UPDATE wine
+    SET 
+      name = ?,
+      year = ?,
+      wine_type = ?,
+      origin_country = ?,
+      region = ?,
+      grape_variety = ?,
+      description = ?,
+      price = ?,
+      best_seller = ?,
+      image = ?
+    WHERE id = ?
+  `;
+
+  const values = [
+    data.name,
+    data.year,
+    data.wine_type,
+    data.origin_country,
+    data.region,
+    data.grape_variety,
+    data.description,
+    data.price,
+    data.best_seller,
+    data.image,
+    id,
+  ];
+
+  return connection
+    .promise()
+    .query(sql, values)
+    .then(() => {
+      return { status: 200, message: "Wine updated successfully" };
+    })
+    .catch((error) => {
+      return { status: 500, message: error };
+    });
+}
+
 // Delete Wine
 async function deleteWine(id) {
   let sqlQuery = `DELETE FROM wine where id = ${id}`;
@@ -66,5 +108,6 @@ module.exports = {
   fetchWines,
   createWine,
   fetchOneWine,
+  updateWine,
   deleteWine,
 };

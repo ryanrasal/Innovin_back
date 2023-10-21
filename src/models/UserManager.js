@@ -15,6 +15,20 @@ async function fetchUser() {
       return { status: 500, message: error };
     });
 }
+// fetch All User WHERE role = role
+async function fetchUserWithoutRoleAdmin() {
+  const sql = "SELECT * FROM user WHERE role = 'user'";
+
+  return connection
+    .promise()
+    .query(sql)
+    .then(async ([rows]) => {
+      return { status: 200, message: rows };
+    })
+    .catch((error) => {
+      return { status: 500, message: error };
+    });
+}
 
 // fetch One User
 async function fetchOneUser(id) {
@@ -80,4 +94,5 @@ module.exports = {
   fetchOneUser,
   insertUser,
   deleteUser,
+  fetchUserWithoutRoleAdmin,
 };

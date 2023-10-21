@@ -19,15 +19,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-const cors = require("cors");
+// const cors = require("cors");
 
-app.use(
-  cors({
-    origin: "http://127.0.0.1:5173",
-    optionsSuccessStatus: 200,
-    credentials: true,
-  }),
-);
+// app.use(
+//   cors({
+//     origin: "http://127.0.0.1:5173" || "http://192.168.1.77:5000",
+//     optionsSuccessStatus: 200,
+//     credentials: true,
+//   })
+// );
 
 app.use("/users", usersRouter);
 app.use("/authentification", authRouter);

@@ -6,8 +6,13 @@ const readOneUserController = require("../controllers/UserControllers/ReadOneUse
 const createUserController = require("../controllers/UserControllers/CreateUserController");
 const deleteUserController = require("../controllers/UserControllers/DeleteUserController");
 
+const readUsersWithoutRoleAdmin = require("../controllers/UserControllers/ReadUsersWithoutRoleAdmin");
+
 /* fetch all users . */
 router.get("/", readUserController);
+
+/* fetch all users without role admin . */
+router.get("/notAdmin", readUsersWithoutRoleAdmin);
 
 /* fetch one user . */
 router.get("/:id", readOneUserController);
