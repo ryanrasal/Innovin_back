@@ -39,3 +39,6 @@ services:
 volumes:
   db_data:
     driver: local
+
+
+    docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' c74d85589979
