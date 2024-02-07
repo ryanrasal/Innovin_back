@@ -16,11 +16,19 @@ jobs:
       db:
         image: mysql:latest
         env:
-          - MYSQL_DATABASE=${MYSQL_DATABASE}
-          - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+          - MYSQL_DATABASE: innovin
+          - MYSQL_ROOT_PASSWORD: root
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    env: 
+      NODE_ENV: ${NODE_ENV}
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: innovin
+      DB_PASSWORD: innovin
+      DB_NAME: innovin
 
     steps:
       - name: Checkout Repository
@@ -34,18 +42,5 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Set up Environment Variables
-        run: |
-          export NODE_ENV=${NODE_ENV}
-          export DB_HOST=db
-          export DB_PORT=3306
-          export DB_USER=${DB_USER}
-          export DB_PASSWORD=${DB_PASSWORD}
-          export DB_NAME=${DB_NAME}
-          export JWT_SECRET=${JWT_SECRET}
-          export JWT_TIMING=1h
-          export UPLOADS_FOLDER=${UPLOADS_FOLDER}
-
       - name: Run Backend Tests
         run: npm test -- --detectOpenHandles
-
