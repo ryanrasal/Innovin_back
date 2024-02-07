@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     
     services:
-      db:
+      mysql:
         image: mysql:latest
         env:
           MYSQL_DATABASE: innovin
@@ -24,7 +24,7 @@ jobs:
 
     env: 
       NODE_ENV: ${NODE_ENV}
-      DB_HOST: db
+      DB_HOST: locahost
       DB_PORT: 3306
       DB_USER: innovin
       DB_PASSWORD: innovin
