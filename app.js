@@ -9,7 +9,8 @@ const authRouter = require("./src/routes/auth");
 const winesRouter = require("./src/routes/wines");
 const cartsRouter = require("./src/routes/carts");
 const cartwinesRouter = require("./src/routes/cartwines");
-// const ordersRouter = require("./src/routes/orders");
+const messagesRouter = require("./src/routes/messages");
+const logoutRouter = require("./src/routes/logout");
 
 const app = express();
 
@@ -19,22 +20,23 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-// const cors = require("cors");
+const cors = require("cors");
 
-// app.use(
-//   cors({
-//     origin: "http://127.0.0.1:5173" || "http://192.168.1.77:5000",
-//     optionsSuccessStatus: 200,
-//     credentials: true,
-//   })
-// );
+app.use(
+  cors({
+    origin: "http://localhost:5173" || "http://192.168.1.77:5000",
+    optionsSuccessStatus: 200,
+    credentials: true,
+  })
+);
 
 app.use("/users", usersRouter);
 app.use("/authentification", authRouter);
 app.use("/wines", winesRouter);
 app.use("/carts", cartsRouter);
 app.use("/cartwines", cartwinesRouter);
-// app.use("/orders", ordersRouter);
+app.use("/messages", messagesRouter);
+app.use("/logout", logoutRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -52,7 +54,7 @@ app.use(function (err, req, res) {
   res.render("error");
 });
 
-const port = 5000;
+const port = 8888;
 
 app.listen(port, (err) => {
   if (err) {

@@ -6,7 +6,7 @@ async function updateWineController(req, res) {
 
   const { status, message } = await WineManager.updateWine(id, dataWine);
 
-  return res.status(status).json(message);
+  return res.json({ status, message });
 }
 
 module.exports = updateWineController;

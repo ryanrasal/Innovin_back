@@ -13,6 +13,8 @@ CREATE TABLE user (
     email VARCHAR(100) UNIQUE,
     password VARCHAR(255),
     address VARCHAR(100),
+    postalCode VARCHAR(255),
+    city VARCHAR(255),
     phone VARCHAR(10)
 );
 -- Création de la table "wine"
@@ -24,11 +26,19 @@ CREATE TABLE wine (
     wine_type VARCHAR(10),
     origin_country VARCHAR(100),
     region VARCHAR(100),
-    grape_variety VARCHAR(100),
     description TEXT,
     price INT,
-    best_seller BOOLEAN,
+    quantity INT,
     image VARCHAR(255)
+);
+-- Création de la table "message"
+DROP TABLE IF EXISTS message;
+CREATE TABLE message (
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    email VARCHAR(100),
+    subject VARCHAR(100),
+    content TEXT,
+    isRead BOOLEAN default false
 );
 -- Création de la table "cart"
 DROP TABLE IF EXISTS cart;
@@ -46,16 +56,5 @@ CREATE TABLE cart_wine (
     wine_id INT,
     cart_id INT,
     FOREIGN KEY (wine_id) REFERENCES wine(id) ON DELETE CASCADE,
-    FOREIGN KEY (cart_id) REFERENCES cart(id)
-);
--- Création de la table "order"
-DROP TABLE IF EXISTS `order`;
-CREATE TABLE `order` (
-    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    cart_id INT,
-    order_date DATE,
-    total_amount FLOAT,
-    shipping_address VARCHAR(100),
-    status VARCHAR(20),
-    FOREIGN KEY (cart_id) REFERENCES cart(id)
+    FOREIGN KEY (cart_id) REFERENCES cart(id) ON DELETE CASCADE
 );

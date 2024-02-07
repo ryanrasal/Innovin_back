@@ -7,10 +7,6 @@ async function createWineController(req, res) {
 
   dataWine.image = renamedFile;
 
-  dataWine.year = parseInt(dataWine.year, 10);
-
-  dataWine.price = parseInt(dataWine.price, 10);
-
   const { status, message } = await WineManager.createWine(dataWine);
 
   return res.status(status).json(message);

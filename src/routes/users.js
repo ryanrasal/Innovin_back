@@ -5,6 +5,7 @@ const readUserController = require("../controllers/UserControllers/ReadUserContr
 const readOneUserController = require("../controllers/UserControllers/ReadOneUserController");
 const createUserController = require("../controllers/UserControllers/CreateUserController");
 const deleteUserController = require("../controllers/UserControllers/DeleteUserController");
+const updateUserController = require("../controllers/UserControllers/UpdateUserController");
 
 const readUsersWithoutRoleAdmin = require("../controllers/UserControllers/ReadUsersWithoutRoleAdmin");
 
@@ -20,7 +21,10 @@ router.get("/:id", readOneUserController);
 /* Create user . */
 router.post("/", createUserController);
 
-/* Create user . */
-router.delete("/:id", deleteUserController);
+/* Update user . */
+router.put("/:id", updateUserController);
+
+/* Delete user . */
+router.delete("/:id",  deleteUserController);
 
 module.exports = router;
