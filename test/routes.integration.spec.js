@@ -38,10 +38,17 @@
 // Importation de la fonction à tester
 
 // Test
+// Fonction à tester
+function add(a, b) {
+  return a + b;
+}
+
+// Test
 test('adds 2 + 2 to equal 4', () => {
   // Exécution de la fonction à tester
-  expect(sum(2, 2)).toBe(4);
+  expect(add(2, 2)).toBe(4);
 });
+
 
 
 // describe("Test routes wines", () => {
