@@ -23,7 +23,7 @@ jobs:
 
     env: 
       NODE_ENV: ${NODE_ENV}
-      DB_HOST: 172.20.0.2
+      DB_HOST: mysql
       DB_PORT: 3306
       DB_USER: innovin
       DB_PASSWORD: innovin
