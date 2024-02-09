@@ -9,7 +9,7 @@
     "test:watch": "jest --watchAll"
   },
   "dependencies": {
-    "argon2": "^0.31.1",
+    "argon2": "^0.27.2",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",

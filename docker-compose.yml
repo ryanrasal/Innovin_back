@@ -1,41 +1,42 @@
+version: '3.8'
+
 services:
-  db:
+  innovin-backend:
+    container_name: innovin-backend
+    build: .
+    image: innovin-backend
+    depends_on:
+      - mysql
+    ports:
+      - 8888:8888
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DB: ${MYSQL_DB}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_TIMING: 1h
+      UPLOADS_FOLDER: ${UPLOADS_FOLDER}
+    links:
+      - mysql
+    volumes:
+      - ./:/express-js  
+
+  mysql:
     image: mysql
     container_name: innovin
     restart: always
     ports:
       - '3306:3306'
     environment:
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     expose:
       - 3306
     volumes:
       - ./db_data:/var/lib/mysql
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql 
 
-  innovin-backend:
-    container_name: innovin-backend
-    build: .
-    image: innovin-backend
-    depends_on:
-      - db
-    ports:
-      - 8888:8888
-    environment:
-      NODE_ENV: ${NODE_ENV}
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
-      DB_NAME: ${DB_NAME}
-      JWT_SECRET: ${JWT_SECRET}
-      JWT_TIMING: 1h
-      UPLOADS_FOLDER: ${UPLOADS_FOLDER}
-    links:
-      - db
-    volumes:
-      - ./:/express-js
 volumes:
   db_data:
     driver: local
