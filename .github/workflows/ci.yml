@@ -1,19 +1,16 @@
-name: ci/cd
+name: ci
 
 on:
   push:
     branches:
       - qa
-      - main
   pull_request:
     branches:
       - qa
-      - main
 
 jobs:
   backend-test:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/qa'
     
     steps:
       - name: Checkout Repository
@@ -30,10 +27,18 @@ jobs:
       - name: Run Backend Tests
         run: npm test -- --detectOpenHandles
 
+name: cd
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
   deploy:
-    needs: backend-test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
     
     steps:
       - name: Checkout Repository
@@ -46,4 +51,4 @@ jobs:
         run: docker tag myapp:latest ${{ steps.build.outputs.ecr-url }}:latest
 
       - name: Push Docker image to AWS ECR
-        run: docker push ${{ steps.build.outputs.ecr-url }}:latest
+        run: docker push ${{ steps.build.outputs.ecr-url }}:latest      
