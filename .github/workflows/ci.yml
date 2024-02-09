@@ -14,10 +14,9 @@ jobs:
     services:
       mysql:
         image: mysql
-        container_name: innovin
         ports:
           - '3308:3306'
-        environment:
+        env:
           MYSQL_DATABASE: innovin
           MYSQL_ROOT_PASSWORD: root
         expose:
