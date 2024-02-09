@@ -24,4 +24,10 @@ jobs:
         run: npm install
 
       - name: Run Backend Tests
+        env:
+          MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          MYSQL_USER: ${{ secrets.MYSQL_USER }}
+          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          MYSQL_DB: ${{ secrets.MYSQL_DB }}
         run: npm test -- --detectOpenHandles
