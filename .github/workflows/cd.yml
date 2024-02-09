@@ -3,10 +3,10 @@ name: CD Pipeline
 on:
   push:
     branches:
-      - qa
+      - main
   pull_request:
     branches:
-      - qa
+      - main
 jobs:
   deploy:
     runs-on: ubuntu-latest
