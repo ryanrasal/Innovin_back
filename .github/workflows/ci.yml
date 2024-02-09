@@ -1,19 +1,16 @@
-name: CI/CD Pipeline
+name: CI Pipeline
 
 on:
   push:
     branches:
       - qa
-      - main
   pull_request:
     branches:
       - qa
-      - main
 
 jobs:
   backend-test:
     runs-on: ubuntu-latest
-    
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -28,22 +25,3 @@ jobs:
 
       - name: Run Backend Tests
         run: npm test -- --detectOpenHandles
-
-  deploy:
-    needs: backend-test
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push' # Exécuter le déploiement uniquement lorsque des modifications sont apportées à la branche main via un push
-    
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Login to AWS ECR
-        uses: aws-actions/amazon-ecr-login@v1
-
-      # Les étapes suivantes pourraient inclure le processus de déploiement, comme le build, le tag et le push de l'image Docker vers AWS ECR
-      - name: Tag Docker image
-        run: docker tag myapp:latest ${{ steps.build.outputs.ecr-url }}:latest
-
-      - name: Push Docker image to AWS ECR
-        run: docker push ${{ steps.build.outputs.ecr-url }}:latest
