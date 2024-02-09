@@ -24,7 +24,7 @@ const cors = require("cors");
 
 app.use(
   cors({
-    origin: "http://localhost:5173" || "http://192.168.1.77:5000",
+    origin: "http://localhost:8080" || "http://192.168.1.77:5000",
     optionsSuccessStatus: 200,
     credentials: true,
   })
