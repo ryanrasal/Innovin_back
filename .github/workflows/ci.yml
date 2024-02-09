@@ -11,6 +11,20 @@ on:
 jobs:
   backend-test:
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql
+        container_name: innovin
+        ports:
+          - '3308:3306'
+        environment:
+          MYSQL_DATABASE: innovin
+          MYSQL_ROOT_PASSWORD: $root
+        expose:
+          - 3308
+        volumes:
+          - ./db_data:/var/lib/mysql
+          - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -18,7 +32,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '21.1.0' 
+          node-version: '21.1.0' # Changer la version de Node.js selon vos besoins
 
       - name: Install Dependencies
         run: npm install
