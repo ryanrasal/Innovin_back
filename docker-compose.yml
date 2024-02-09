@@ -11,9 +11,9 @@ services:
       - 8888:8888
     environment:
       MYSQL_HOST: localhost
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_DB: ${MYSQL_DB}
+      MYSQL_USER: innovin
+      MYSQL_PASSWORD: innovin
+      MYSQL_DB: innovin
       JWT_SECRET: ${JWT_SECRET}
       JWT_TIMING: 1h
       UPLOADS_FOLDER: ${UPLOADS_FOLDER}
