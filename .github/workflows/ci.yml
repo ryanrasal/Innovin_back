@@ -23,10 +23,5 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Run Backend Tests
-        env:
-          MYSQL_HOST: localhost
-          MYSQL_USER: innovin
-          MYSQL_PASSWORD: innovin
-          MYSQL_DB: innovin
+      - name: Run Backend Test
         run: npm test -- --detectOpenHandles
