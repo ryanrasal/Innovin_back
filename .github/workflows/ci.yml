@@ -26,7 +26,6 @@ jobs:
       - name: Run Backend Tests
         env:
           MYSQL_HOST: localhost
-          DB_PORT: 3308
           MYSQL_USER: innovin
           MYSQL_PASSWORD: innovin
           MYSQL_DB: innovin
