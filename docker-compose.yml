@@ -10,7 +10,7 @@ services:
     ports:
       - 8888:8888
     environment:
-      MYSQL_HOST: mysql
+      MYSQL_HOST: localhost
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DB: ${MYSQL_DB}
@@ -27,12 +27,12 @@ services:
     container_name: innovin
     restart: always
     ports:
-      - '3306:3306'
+      - '3308:3306'
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     expose:
-      - 3306
+      - 3308
     volumes:
       - ./db_data:/var/lib/mysql
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql 

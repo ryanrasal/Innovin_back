@@ -67,6 +67,7 @@ describe("Test routes wines", () => {
         .get("/wines")
         .expect(200)
         .expect("Content-Type", /json/);
+        console.log("response.body", response.body)
       expect(response.body).toEqual(global.testMessages);
     } catch (error) {
       throw error;
