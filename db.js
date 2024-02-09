@@ -9,4 +9,6 @@ const connection = mysql.createConnection({
   database: process.env.MYSQL_DB,
 });
 
+console.log(MYSQL_HOST, DB_PORT, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DB)
+
 module.exports = connection;
