@@ -11,8 +11,8 @@ services:
       - 8888:8888
     environment:
       MYSQL_HOST: localhost
-      MYSQL_USER: innovin
-      MYSQL_PASSWORD: innovin
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
       MYSQL_DB: innovin
       JWT_SECRET: ${JWT_SECRET}
       JWT_TIMING: 1h

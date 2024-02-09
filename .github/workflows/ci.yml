@@ -32,9 +32,9 @@ jobs:
         run: |
           echo "APP_PORT=8888" >> $GITHUB_ENV
           echo "FRONTEND_URL=http://127.0.0.1:5173/" >> $GITHUB_ENV
-          echo "MYSQL_HOST=172.20.0.2" >> $GITHUB_ENV
-          echo "MYSQL_USER=innovin" >> $GITHUB_ENV
-          echo "MYSQL_PASSWORD=innovin" >> $GITHUB_ENV
+          echo "MYSQL_HOST=localhost" >> $GITHUB_ENV
+          echo "MYSQL_USER=root" >> $GITHUB_ENV
+          echo "MYSQL_PASSWORD=root" >> $GITHUB_ENV
           echo "MYSQL_DB=innovin" >> $GITHUB_ENV
           echo "DB_PORT=3308" >> $GITHUB_ENV
           echo "MYSQL_ROOT_PASSWORD=root" >> $GITHUB_ENV
