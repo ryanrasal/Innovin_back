@@ -28,6 +28,21 @@ jobs:
         with:
           node-version: '21.1.0' # Changer la version de Node.js selon vos besoins
 
+      - name: Set up environment variables
+        run: |
+          echo "APP_PORT=8888" >> $GITHUB_ENV
+          echo "FRONTEND_URL=http://127.0.0.1:5173/" >> $GITHUB_ENV
+          echo "MYSQL_HOST=172.20.0.2" >> $GITHUB_ENV
+          echo "MYSQL_USER=innovin" >> $GITHUB_ENV
+          echo "MYSQL_PASSWORD=innovin" >> $GITHUB_ENV
+          echo "MYSQL_DB=innovin" >> $GITHUB_ENV
+          echo "DB_PORT=3308" >> $GITHUB_ENV
+          echo "MYSQL_ROOT_PASSWORD=root" >> $GITHUB_ENV
+          echo "MYSQL_DATABASE=innovin" >> $GITHUB_ENV
+          echo "JWT_SECRET='POULOULOULAPHRASELAPLUSLONGUEDUMONDETUCONNAISTESPASPRETPOURLALONGUEURDUTRUCMABIBICHE'" >> $GITHUB_ENV
+          echo "JWT_TIMING=1h" >> $GITHUB_ENV
+          echo "UPLOADS_FOLDER=public/uploads/" >> $GITHUB_ENV
+
       - name: Install Dependencies
         run: npm install
 
