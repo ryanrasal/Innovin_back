@@ -38,15 +38,14 @@ describe("createMessageController", () => {
 
 describe("Test routes wines", () => {
   let connection;
-
   beforeAll(async () => {
     // Établir une connexion à la base de données
     connection = await mysql.createConnection({
-      host: 'localhost',
-      user: 'root',
+      host: "localhost",
+      user: "root",
       port: 3308,
-      password: 'root',
-      database: 'innovin'
+      password: "root",
+      database: "innovin",
     });
   });
 
@@ -55,12 +54,11 @@ describe("Test routes wines", () => {
     await connection.end();
   });
 
-
-  it('devrait renvoyer un tableau de vins avec un statut 200', async () => {
+  it("devrait renvoyer un tableau de vins avec un statut 200", async () => {
     // Exécuter une requête GET sur la route /wines
-    const response = await request(app).get('/wines');
+    const response = await request(app).get("/wines");
 
-    console.log("coucou je suis la reponse", response.body)
+    console.log("coucou je suis la reponse", response.body);
 
     // Vérifier le statut de la réponse
     expect(response.status).toBe(200);
@@ -69,14 +67,13 @@ describe("Test routes wines", () => {
     expect(Array.isArray(response.body)).toBeTruthy();
 
     // Vérifier que la base de données contient des vins
-    const [rows] = await connection.promise().query('SELECT * FROM wine');
+    const [rows] = await connection.promise().query("SELECT * FROM wine");
 
-    console.log("coucou je la row", rows)
+    console.log("coucou je la row", rows);
 
     expect(response.body).toEqual(rows); // Utilisation des données directement depuis la base de données
   });
 });
-
 
 // describe("Test routes users", () => {
 //   beforeEach(async () => {
@@ -143,6 +140,3 @@ describe("Test routes wines", () => {
 //     }
 //   });
 // });
-
-
- 
