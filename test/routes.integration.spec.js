@@ -41,7 +41,7 @@ describe("Test routes wines", () => {
   beforeAll(async () => {
     // Établir une connexion à la base de données
     connection = await mysql.createConnection({
-      host: "localhost",
+      host: "172.20.0.2",
       user: "root",
       port: 3308,
       password: "root",
