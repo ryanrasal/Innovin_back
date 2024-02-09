@@ -19,8 +19,6 @@ jobs:
         env:
           MYSQL_DATABASE: innovin
           MYSQL_ROOT_PASSWORD: root
-        expose:
-          - 3308
         volumes:
           - ./db_data:/var/lib/mysql
           - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
