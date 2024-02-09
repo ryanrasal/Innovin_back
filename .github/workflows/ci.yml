@@ -13,7 +13,6 @@ on:
 jobs:
   backend-test:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/qa' || (github.ref == 'refs/heads/main' && github.event_name == 'push') # Exécuter les tests uniquement sur la branche qa ou sur la branche main lorsqu'un push est effectué
     
     steps:
       - name: Checkout Repository
