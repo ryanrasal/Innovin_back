@@ -1,25 +1,25 @@
 version: '3.8'
 
 services:
-  innovin-backend:
-    networks:
-      - my_custom_network
-    build: .
-    image: innovin-backend
-    depends_on:
-      - mysql
-    ports:
-      - 8888:8888
-    environment:
-      MYSQL_HOST: mysql
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_DB: ${MYSQL_DB}
-      JWT_SECRET: ${JWT_SECRET}
-      JWT_TIMING: 1h
-      UPLOADS_FOLDER: ${UPLOADS_FOLDER}
-    links:
-      - mysql
+  # innovin-backend:
+  #   networks:
+  #     - my_custom_network
+  #   build: .
+  #   image: innovin-backend
+  #   depends_on:
+  #     - mysql
+  #   ports:
+  #     - 8888:8888
+  #   environment:
+  #     MYSQL_HOST: mysql
+  #     MYSQL_USER: ${MYSQL_USER}
+  #     MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  #     MYSQL_DB: ${MYSQL_DB}
+  #     JWT_SECRET: ${JWT_SECRET}
+  #     JWT_TIMING: 1h
+  #     UPLOADS_FOLDER: ${UPLOADS_FOLDER}
+  #   links:
+  #     - mysql
 
   mysql:
     networks:

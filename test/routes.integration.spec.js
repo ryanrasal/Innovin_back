@@ -1,47 +1,49 @@
-const createUserController = require("../src/controllers/UserControllers/CreateUserController");
-const UserManager = require("../src/models/UserManager");
+// test/app.integration.spec.js
+const request = require("supertest");
+const app = require("../app");
+const connection = require("../db");
+const createMessageController = require("../src/controllers/MessageControllers/CreateMessageController");
+const MessageManager = require("../src/models/MessageManager");
 
-jest.mock("../src/models/UserManager");
+jest.mock("../src/models/MessageManager");
 
-describe("CreateUserController", () => {
-  it("should return status 201 and user data on successful insertion", async () => {
+describe("createMessageController", () => {
+  it("should return status 201 and message on successful insertion", async () => {
     const req = {
       body: {
-        firstname: "John",
-        lastname: "Doe",
-        username: "johndoe",
-        role: "user",
-        email: "johndoe@example.com",
-        password: "password123",
-        address: "123 Main St",
-        phone: "123-456-7890",
-        postalCode: "12345",
-        city: "Cityville",
+        email: "test@example.com",
+        subject: "Test",
+        content: "Test message",
+        isRead: false,
       },
     };
-    const mockInsertUser = jest
-      .spyOn(UserManager, "insertUser")
-      .mockResolvedValue({
-        status: 201,
-        message: {
-          id: 1,
-          ...req.body,
-        },
-      });
+    const mockInsertMessage = jest
+      .spyOn(MessageManager, "insertMessage")
+      .mockResolvedValue({ status: 201, message: "message created" });
 
     const res = {
       json: jest.fn(),
     };
 
-    await createUserController(req, res);
+    await createMessageController(req, res);
 
-    expect(mockInsertUser).toHaveBeenCalledWith(req.body);
+    expect(mockInsertMessage).toHaveBeenCalledWith(req.body);
     expect(res.json).toHaveBeenCalledWith({
       status: 201,
-      message: {
-        id: 1,
-        ...req.body,
-      },
+      message: "message created",
     });
+  });
+});
+
+describe("Test routes wines", () => {
+
+  it("devrait renvoyer un tableau de vins avec un statut 200", async () => {
+    const response = await request(app).get("/wines");
+
+    expect(response.status).toBe(200);
+
+    const [rows] = await connection.promise().query("SELECT * FROM wine");
+
+    expect(response.body).toEqual(rows); 
   });
 });
