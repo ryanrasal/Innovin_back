@@ -40,5 +40,5 @@ jobs:
           MYSQL_DATABASE: innovin
           MYSQL_ROOT_PASSWORD: root
           MYSQL_HOST: localhost
-          MYSQL_PORT: 3308
+          MYSQL_PORT: 3306
           MYSQL_USER: root
