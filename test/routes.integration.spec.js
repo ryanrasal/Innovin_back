@@ -40,15 +40,9 @@ describe("Test routes wines", () => {
   it("devrait renvoyer un tableau de vins avec un statut 200", async () => {
     const response = await request(app).get("/wines");
 
-    console.log("coucou je suis la reponse", response);
-
     expect(response.status).toBe(200);
 
-    expect(Array.isArray(response.body)).toBeTruthy();
-
     const [rows] = await connection.promise().query("SELECT * FROM wine");
-
-    console.log("coucou je la row", rows);
 
     expect(response.body).toEqual(rows); 
   });
