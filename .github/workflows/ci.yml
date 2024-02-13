@@ -15,8 +15,8 @@ jobs:
       mysql:
         image: mysql
         env:
-          MYSQL_DATABASE: ${MYSQL_DATABASE}
-          MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+          MYSQL_DATABASE: innovin
+          MYSQL_ROOT_PASSWORD: root
         ports:
           - '3306:3306'
 
