@@ -6,10 +6,9 @@ before_install:
 jobs:
   include:
     - name: Backend Test
-      if: $TRAVIS_BRANCH = qa 
+      if: $TRAVIS_PULL_REQUEST_BRANCH = test AND $TRAVIS_BRANCH = qa
       script:
         - npm test -- --detectOpenHandles
-
 
 deploy:
   provider: heroku
