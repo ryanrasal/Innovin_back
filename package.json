@@ -6,8 +6,7 @@
     "start": "nodemon ./bin/www",
     "fix": "prettier --write . && eslint --fix --ext .js .",
     "test": "jest",
-    "test:watch": "jest --watchAll",
-    "build": "npm install && npm run migration:run && cd frontend && npm install && npm run dbuild"
+    "test:watch": "jest --watchAll"
   },
   "dependencies": {
     "argon2": "^0.27.2",
