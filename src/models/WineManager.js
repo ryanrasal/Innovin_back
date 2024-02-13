@@ -31,16 +31,47 @@ async function fetchOneWine(id) {
 
 // Create Wine
 async function createWine(data) {
-  const sql = `INSERT INTO wine (name, year, wine_type, origin_country, region, grape_variety, description, price, best_seller, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  const sql = `INSERT INTO wine (name, year, wine_type, origin_country, region, description, price, quantity, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
-  let bodyResponse = { ...data };
+  const wineData = JSON.parse(data.wine);
+  const imageFilename = data.image;
+
+  const valuesWine = [
+    wineData.name,
+    wineData.year,
+    wineData.wine_type,
+    wineData.origin_country,
+    wineData.region,
+    wineData.description,
+    wineData.price,
+    wineData.quantity,
+    imageFilename,
+  ];
 
   return connection
     .promise()
-    .query(sql, Object.values(data))
-    .then(async ([rows]) => {
-      bodyResponse.id = rows.insertId;
-      return { status: 201, message: bodyResponse };
+    .query(sql, valuesWine)
+    .then(async ([rows]) => ({
+      status: 201,
+      message: { ...data, id: rows.insertId },
+    }))
+    .catch((error) => ({ status: 500, message: error }));
+}
+
+
+// update wine
+async function updateWine(id, data) {
+  const sql = `
+    UPDATE wine SET name = ?, year = ?, wine_type = ?, origin_country = ?, region = ?,
+      description = ?, price = ?, quantity = ?, image = ? WHERE id = ? `;
+
+  const values = [...Object.values(data), id];
+
+  return connection
+    .promise()
+    .query(sql, values)
+    .then(() => {
+      return { status: 200, message: "Wine updated successfully" };
     })
     .catch((error) => {
       return { status: 500, message: error };
@@ -66,5 +97,6 @@ module.exports = {
   fetchWines,
   createWine,
   fetchOneWine,
+  updateWine,
   deleteWine,
 };

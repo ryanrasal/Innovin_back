@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  # innovin-backend:
+  #   build: .
+  #   image: innovin-backend
+  #   depends_on:
+  #     - mysql
+  #   ports:
+  #     - 8888:8888
+  #   environment:
+  #     MYSQL_HOST: mysql
+  #     MYSQL_USER: ${MYSQL_USER}
+  #     MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  #     MYSQL_DB: ${MYSQL_DB}
+  #     JWT_SECRET: ${JWT_SECRET}
+  #     JWT_TIMING: 1h
+  #     UPLOADS_FOLDER: ${UPLOADS_FOLDER}
+  #   volumes: 
+  #     - ./:/express-js
+
+  mysql:
+    image: mysql
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ./db_data:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  db_data:
+    driver: local

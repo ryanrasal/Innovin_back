@@ -16,6 +16,8 @@ const createWineController = require("../controllers/WineControllers/CreateWineC
 
 const deleteOneWineController = require("../controllers/WineControllers/DeleteWineController");
 
+const updateWineController = require("../controllers/WineControllers/UpdateWineController");
+
 /* fetch all wines . */
 router.get("/", readWinesController);
 
@@ -24,6 +26,9 @@ router.get("/:id", readOneWineController);
 
 /* DELETE one wine . */
 router.delete("/:id", deleteOneWineController);
+
+/* Put one Wine. */
+router.put("/:id", updateWineController);
 
 /* Create Wine . */
 router.post(

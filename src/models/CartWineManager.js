@@ -37,20 +37,29 @@ async function insertCartWine(data, res) {
   }
 }
 
-async function deletedCartWine(id) {
-  const sql = `DELETE FROM cart_wine WHERE id = ${id}`;
+async function deletedCartWine(wineId, userId) {
+  const sqlFirst = `SELECT * FROM cart WHERE user_id = ${userId} AND is_order = false;`;
 
-  return connection
-    .promise()
-    .query(sql)
-    .then(async () => {
-      return { status: 200, message: {} };
-    })
-    .catch((error) => {
-      return { status: 500, message: error };
-    });
+  try {
+    const [cartRows] = await connection.promise().query(sqlFirst);
+
+    if (cartRows.length === 0) {
+      throw new Error("Cart not found for the user.");
+    }
+    const cartWineId = cartRows[0].id;
+    const deleteWine = `DELETE FROM cart_wine WHERE wine_id = ${wineId} AND cart_id = ${cartWineId}`;
+    const [deleteResult] = await connection.promise().query(deleteWine);
+
+    if (deleteResult.affectedRows === 0) {
+      throw new Error("Wine not found in the cart.");
+    }
+
+    return { status: 200, message: "Wine deleted successfully." };
+  } catch (error) {
+    console.error(error);
+    return { status: 500, message: error.message || "Internal Server Error" };
+  }
 }
-
 module.exports = {
   insertCartWine,
   deletedCartWine,

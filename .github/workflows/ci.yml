@@ -1,0 +1,45 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - qa
+  pull_request:
+    branches:
+      - qa
+
+jobs:
+  backend-test:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql
+        env:
+          MYSQL_DATABASE: innovin
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - '3306:3306'
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14.x'
+
+      - name: Install Dependencies and Build
+        run: 
+          npm install
+
+      - name: Run Backend Tests
+        run: npm test -- --detectOpenHandles
+
+        # - name: Deploy to Heroku
+        # uses: akhileshns/heroku-deploy@v3.12.12
+        # with:
+        #   heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+        #   heroku_app_name: 'your-heroku-app-name'
+        #   heroku_email: 'your-heroku-email@example.com'
+        #   usedocker: 'yes'

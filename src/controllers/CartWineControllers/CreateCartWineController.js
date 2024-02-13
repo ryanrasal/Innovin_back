@@ -1,6 +1,7 @@
 const CartWineManager = require("../../models/CartWineManager");
 
 async function createCartWineController(req, res) {
+  console.warn("coucou toi 1")
   try {
     await CartWineManager.insertCartWine(req.body, res);
   } catch (error) {
