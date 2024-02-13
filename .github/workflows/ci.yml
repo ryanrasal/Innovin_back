@@ -30,16 +30,15 @@ jobs:
           node-version: '14.x'
 
       - name: Install Dependencies and Build
-        run: |
+        run: 
           npm install
-          npm run build
 
       - name: Run Backend Tests
         run: npm test -- --detectOpenHandles
 
         env: 
-          MYSQL_DATABASE: database
-          MYSQL_ROOT_PASSWORD: toto
+          MYSQL_DATABASE: innovin
+          MYSQL_ROOT_PASSWORD: root
           MYSQL_HOST: localhost
           MYSQL_PORT: 3308
           MYSQL_USER: root
