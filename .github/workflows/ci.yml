@@ -14,11 +14,13 @@ jobs:
     services:
       mysql:
         image: mysql
+        env_file:
+          - .env
         env:
-          MYSQL_DATABASE: database
-          MYSQL_ROOT_PASSWORD: toto
+          MYSQL_DATABASE: ${MYSQL_DATABASE}
+          MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
         ports:
-          - '3308:3306'
+          - '3306:3306'
 
     steps:
       - name: Checkout Repository
@@ -36,9 +38,10 @@ jobs:
       - name: Run Backend Tests
         run: npm test -- --detectOpenHandles
 
-        env: 
-          MYSQL_DATABASE: innovin
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_HOST: localhost
-          MYSQL_PORT: 3306
-          MYSQL_USER: root
+        # - name: Deploy to Heroku
+        # uses: akhileshns/heroku-deploy@v3.12.12
+        # with:
+        #   heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+        #   heroku_app_name: 'your-heroku-app-name'
+        #   heroku_email: 'your-heroku-email@example.com'
+        #   usedocker: 'yes'

@@ -3,15 +3,25 @@ const { passwordHasher } = require("../services/PasswordHelper");
 const Joi = require("joi");
 
 const registrationSchema = Joi.object({
-  firstname: Joi.string().regex(/^[a-zA-Z]+$/).required(),
-  lastname: Joi.string().regex(/^[a-zA-Z]+$/).required(), 
-  username: Joi.string().required(),
+  firstname: Joi.string()
+    .regex(/^[a-zA-Z-]+$/)
+    .required(),
+  lastname: Joi.string()
+    .regex(/^[a-zA-Z-]+$/)
+    .required(),
+  username: Joi.string()
+    .regex(/^[a-zA-Z0-9]+$/)
+    .required(),
   role: Joi.string().required(),
   email: Joi.string().email().required(),
   password: Joi.string().required(),
   address: Joi.string().required(),
-  phone: Joi.string().required(),
-  postalCode: Joi.string().required(),
+  phone: Joi.string()
+    .regex(/^\d{10}$/)
+    .required(),
+  postalCode: Joi.string()
+    .regex(/^\d{5}$/)
+    .required(),
   city: Joi.string().required(),
 });
 
@@ -74,25 +84,27 @@ async function insertUser(data) {
     };
   }
 
-  const checkEmailQuery =
-    "SELECT COUNT(*) AS emailCount FROM user WHERE email = ?";
-    
-    const [emailCheckResult] = await connection
+  const checkEmailQuery = "SELECT * FROM user WHERE email = ?";
+
+  const emailCheckResult = await connection
     .promise()
     .query(checkEmailQuery, [data.email]);
-    const emailExists = emailCheckResult[0].emailCount > 0;
-    
-    if (emailExists) {
-      return { status: 409, message: "Email already exists" };
-    }
-    
-    data.password = await passwordHasher(data.password);
-    let bodyResponse = { ...data };
-    
-    const insertUserQuery =
-      "INSERT INTO user (firstname, lastname, username, role, email, password, address, phone, postalCode, city) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+  const emailExists = emailCheckResult[0].length;
+
+  if (emailExists > 0) {
+    return { status: 409, message: "Email already exists" };
+  }
+
+  data.password = await passwordHasher(data.password);
+  let bodyResponse = { ...data };
+
+  const insertUserQuery =
+    "INSERT INTO user (firstname, lastname, username, role, email, password, address, phone, postalCode, city) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
   try {
-    const [rows] = await connection.promise().query(insertUserQuery, Object.values(data));
+    const [rows] = await connection
+      .promise()
+      .query(insertUserQuery, Object.values(data));
 
     bodyResponse.id = rows.insertId;
     let postCartQuery = `INSERT INTO cart (is_order, user_id) VALUES ('0', ${bodyResponse.id})`;
@@ -104,7 +116,6 @@ async function insertUser(data) {
     return { status: 500, message: "Internal Server Error" };
   }
 }
-
 
 // Delete User
 async function deleteUser(id) {
