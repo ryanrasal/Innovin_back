@@ -26,6 +26,8 @@ services:
       - my_custom_network
     image: mysql
     restart: always
+    env_file:
+      - .env
     ports:
       - '3308:3306'
     environment:
