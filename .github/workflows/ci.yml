@@ -14,8 +14,6 @@ jobs:
     services:
       mysql:
         image: mysql
-        env_file:
-          - .env
         env:
           MYSQL_DATABASE: ${MYSQL_DATABASE}
           MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
