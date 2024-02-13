@@ -1,7 +1,7 @@
 // test/app.integration.spec.js
 const request = require("supertest");
 const app = require("../app");
-// const connection = require("../db");
+const connection = require("../db");
 const mysql = require("mysql2");
 const createMessageController = require("../src/controllers/MessageControllers/CreateMessageController");
 const MessageManager = require("../src/models/MessageManager");
@@ -36,44 +36,43 @@ describe("createMessageController", () => {
   });
 });
 
-// describe("Test routes wines", () => {
-//   let connection;
-//   beforeAll(async () => {
-//     // Établir une connexion à la base de données
-//     connection = await mysql.createPool({
-//       host: "172.20.0.2",
-//       user: "root",
-//       port: 3308,
-//       password: "root",
-//       database: "innovin",
-//     });
-//   });
+describe("Test routes wines", () => {
+  let connection;
+  beforeAll(async () => {
+    // Établir une connexion à la base de données
+    connection = await mysql.createPool({
+      host: "localhost",
+      user: "root",
+      port: 3306,
+      password: "root",
+      database: "innovin",
+    });
+  });
+  afterAll(async () => {
+    // Fermer la connexion à la base de données après les tests
+    await connection.end();
+  });
 
-//   afterAll(async () => {
-//     // Fermer la connexion à la base de données après les tests
-//     await connection.end();
-//   });
+  it("devrait renvoyer un tableau de vins avec un statut 200", async () => {
+    // Exécuter une requête GET sur la route /wines
+    const response = await request(app).get("/wines");
 
-//   it("devrait renvoyer un tableau de vins avec un statut 200", async () => {
-//     // Exécuter une requête GET sur la route /wines
-//     const response = await request(app).get("/wines");
+    console.log("coucou je suis la reponse", response);
 
-//     console.log("coucou je suis la reponse", response);
+    // Vérifier le statut de la réponse
+    expect(response.status).toBe(200);
 
-//     // Vérifier le statut de la réponse
-//     expect(response.status).toBe(200);
+    // Vérifier le contenu de la réponse
+    expect(Array.isArray(response.body)).toBeTruthy();
 
-//     // Vérifier le contenu de la réponse
-//     expect(Array.isArray(response.body)).toBeTruthy();
+    // Vérifier que la base de données contient des vins
+    const [rows] = await connection.promise().query("SELECT * FROM wine");
 
-//     // Vérifier que la base de données contient des vins
-//     const [rows] = await connection.promise().query("SELECT * FROM wine");
+    console.log("coucou je la row", rows);
 
-//     console.log("coucou je la row", rows);
-
-//     expect(response.body).toEqual(rows); // Utilisation des données directement depuis la base de données
-//   });
-// });
+    expect(response.body).toEqual(rows); // Utilisation des données directement depuis la base de données
+  });
+});
 
 // describe("Test routes users", () => {
 //   beforeEach(async () => {

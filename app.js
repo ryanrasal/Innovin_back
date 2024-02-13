@@ -24,7 +24,7 @@ const cors = require("cors");
 
 app.use(
   cors({
-    origin: '*',
+    origin: "http://localhost:5173" || "http://192.168.107.96",
     optionsSuccessStatus: 200,
     credentials: true,
   })
@@ -36,7 +36,7 @@ app.use("/wines", winesRouter);
 app.use("/carts", cartsRouter);
 app.use("/cartwines", cartwinesRouter);
 app.use("/messages", messagesRouter);
-app.use("/logout", logoutRouter)
+app.use("/logout", logoutRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

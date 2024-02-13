@@ -1,6 +1,9 @@
 # Utilisation de l'image Node.js officielle
 FROM node:lts-alpine
 
+# Installation de Python
+RUN apk add --no-cache python3
+
 # Création du répertoire de travail dans l'image
 WORKDIR /app
 
